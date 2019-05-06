@@ -14,6 +14,7 @@ setup(
     version='0.0.1',
     description='SignalR client for Python',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/ahcub/signalrc',
     author='Alex Buchkovsky',
     author_email='alex.buchkovsky@gmail.com',
