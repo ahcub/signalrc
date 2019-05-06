@@ -1,6 +1,8 @@
+from os.path import join, dirname
+
 from setuptools import setup, find_packages
 
-with open('requirements.txt') as requirements_file:
+with open(join(dirname(__file__), 'requirements.txt')) as requirements_file:
     install_reqs = [line.strip() for line in requirements_file]
 
 print('install_reqs:', install_reqs)
@@ -11,7 +13,7 @@ with open('README.md') as file:
 
 setup(
     name='signalrc',
-    version='0.0.2',
+    version='0.0.3',
     description='SignalR client for Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
