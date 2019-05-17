@@ -13,7 +13,7 @@ with open('README.md') as file:
 
 setup(
     name='signalrc',
-    version='0.0.4',
+    version='0.0.5',
     description='SignalR client for Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
