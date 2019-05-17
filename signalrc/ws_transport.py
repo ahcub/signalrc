@@ -41,6 +41,7 @@ class WebSocketsTransport:
         ws_url = self.__get_ws_url_from(self._get_url('connect', token, hub))
 
         self.ws = create_connection(ws_url,
+                                    timeout=10,
                                     header=self._get_headers(),
                                     cookie=self._get_cookie_str(),
                                     enable_multithread=True)
