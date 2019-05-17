@@ -65,9 +65,8 @@ class SignalRClient:
                 logger.exception('Failed to receive the data via transport')
                 try:
                     self.exception.trigger_hooks(error)
-                except Exception:
-                    logger.exception('Failed on trigger of exception hooks')
-                self.is_open = False
+                finally:
+                    self.is_open = False
 
     def close(self):
         if self.is_open:
