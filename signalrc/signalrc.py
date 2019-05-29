@@ -28,6 +28,9 @@ class SignalRClient:
         self._hub_handlers = {}
 
     def handle_hub_message(self, data):
+        if 'R' in data and not isinstance(data['R'], bool):
+            if 'R' in self._hub_handlers:
+                self._hub_handlers['R'].trigger_hooks({'R': data['R']})
         messages = data['M'] if 'M' in data and len(data['M']) > 0 else {}
         for inner_data in messages:
             method = inner_data['M']
