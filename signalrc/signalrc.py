@@ -1,4 +1,3 @@
-import sys
 from logging import getLogger
 from threading import Thread
 from time import sleep
@@ -28,18 +27,18 @@ class SignalRClient:
         self.received.add_hooks(self.handle_hub_message, self.handle_error)
         self._hub_handlers = {}
 
-    def handle_hub_message(self, **kwargs):
-        messages = kwargs['M'] if 'M' in kwargs and len(kwargs['M']) > 0 else {}
+    def handle_hub_message(self, data):
+        messages = data['M'] if 'M' in data and len(data['M']) > 0 else {}
         for inner_data in messages:
             method = inner_data['M']
             if method in self._hub_handlers:
                 arguments = inner_data['A']
                 self._hub_handlers[method].trigger_hooks(*arguments)
 
-    def handle_error(self, **kwargs):
-        if 'E' in kwargs:
-            invoke_index = int(kwargs.get('I', -1))
-            self.error.trigger_hooks({'error': kwargs['E'],
+    def handle_error(self, data):
+        if 'E' in data:
+            invoke_index = int(data.get('I', -1))
+            self.error.trigger_hooks({'error': data['E'],
                                       'call_arguments': self.invokes_data.get(invoke_index)})
 
     def start(self):
@@ -60,7 +59,7 @@ class SignalRClient:
         while self.is_open:
             try:
                 data = self._transport.receive()
-                self.received.trigger_hooks(**data)
+                self.received.trigger_hooks(data)
             except Exception as error:
                 logger.exception('Failed to receive the data via transport')
                 try:
