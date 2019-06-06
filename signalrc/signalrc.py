@@ -71,6 +71,7 @@ class SignalRClient:
                     self.is_open = False
 
     def close(self):
+        logger.info('Closing connection')
         if self.is_open:
             self.is_open = False
             self._message_listener.join()
