@@ -85,8 +85,13 @@ class SignalRClient:
         self.close()
 
     def run_while_open(self):
-        while self.is_open:
-            sleep(0.01)
+        try:
+            while self.is_open:
+                sleep(0.01)
+        except KeyboardInterrupt:
+            self.close()
+            self.stopping.trigger_hooks()
+            raise
 
     def invoke(self, method, *data):
         self._invokes_counter += 1
